@@ -2,18 +2,17 @@
 //
 //  Released under the MIT license (http://opensource.org/licenses/MIT)
 //
-// vvv 2F4A0C1A-7700-40D7-9E3A-5E4B26A6B03C file_preprocessor.application.j2se.jsmin.JavascriptMinify
+// vvv 2C877730-9F9F-4BAE-8FA6-35978C881DC4 file_preprocessor.application.j2se.jsmin.JavascriptMinify
 
 
 var jsonbroker = jsonbroker || {};
+jsonbroker.client = jsonbroker.client || {};
 
 
-if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.client.MobileBridge.js'" )}
-
-jsonbroker.MobileBridge = function() {
+jsonbroker.client.MobileBridge = function() {
 }
 
-jsonbroker.MobileBridge.prototype.dispatch = function() {
+jsonbroker.client.MobileBridge.prototype.dispatch = function() {
 
     var args = Array.prototype.slice.call(arguments);
     var jsonArgs = JSON.stringify(args);
@@ -46,4 +45,4 @@ jsonbroker.MobileBridge.prototype.dispatch = function() {
 }
 
 
-// ^^^ 2F4A0C1A-7700-40D7-9E3A-5E4B26A6B03C file_preprocessor.application.j2se.jsmin.JavascriptMinify
+// ^^^ 2C877730-9F9F-4BAE-8FA6-35978C881DC4 file_preprocessor.application.j2se.jsmin.JavascriptMinify

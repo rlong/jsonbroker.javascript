@@ -3,7 +3,8 @@
 //  Released under the MIT license ( http://opensource.org/licenses/MIT )
 //
 
-var jsonbroker=jsonbroker||{};jsonbroker.buildBridge=function(){if(0===location.protocol.indexOf("http")){return new jsonbroker.BrowserBridge();}
+var jsonbroker=jsonbroker||{};if(console&&console.warn){console.warn("deprecated: use 'jsonbroker.common.js' and 'jsonbroker.client.js'")}
+jsonbroker.buildBridge=function(){if(0===location.protocol.indexOf("http")){return new jsonbroker.BrowserBridge();}
 if(jsonbroker.MobileBridge){return new jsonbroker.MobileBridge();}
 if(jsonbroker.DesktopBridge){return new jsonbroker.DesktopBridge();}
 throw"Could not Find Appropriate Bridge";};jsonbroker.onPause=function(){};jsonbroker.onResume=function(){};jsonbroker.onFault=function(){if(console&&console.error){console.error(arguments)}};jsonbroker.onResponse=function(){};jsonbroker.proxies={};jsonbroker.registerProxy=function(proxyName,proxy){jsonbroker.proxies[proxyName]=proxy;};jsonbroker.forwardFault=function(){var proxy=jsonbroker.proxies[arguments[2]];if(proxy){arguments[2]=proxy;var method=proxy[arguments[5]];if(method){arguments[5]=method;var methodOnFault=method.onFault;if(methodOnFault){methodOnFault.apply(methodOnFault,arguments);return;}}

@@ -2,49 +2,44 @@
 //
 //  Released under the MIT license ( http://opensource.org/licenses/MIT )
 //
-// vvv D4FA3825-997D-4E5F-B1E9-28A680A81362 file_preprocessor.application.j2se.jsmin.JavascriptMinify
+// vvv 3973ED56-6593-4A92-8578-ECBF849EA0C9 file_preprocessor.application.j2se.jsmin.JavascriptMinify
 
 
 var jsonbroker = jsonbroker || {};
+jsonbroker.client = jsonbroker.client || {};
 
-
-if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.common.js' and 'jsonbroker.client.js'" )}
-
-
-jsonbroker.buildBridge = function() {
+jsonbroker.client.buildBridge = function() {
 
     if( 0 === location.protocol.indexOf("http") ) {
-        return new jsonbroker.BrowserBridge();
+        return new jsonbroker.client.BrowserBridge();
     }
 
-    if( jsonbroker.MobileBridge ) {
-        return new jsonbroker.MobileBridge();
+    if( jsonbroker.client.MobileBridge ) {
+        return new jsonbroker.client.MobileBridge();
     }
 
-    if( jsonbroker.DesktopBridge ) {
-        return new jsonbroker.DesktopBridge();
+    if( jsonbroker.client.DesktopBridge ) {
+        return new jsonbroker.client.DesktopBridge();
     }
 
     throw "Could not Find Appropriate Bridge";
 
 };
 
-jsonbroker.onPause = function () {};
-jsonbroker.onResume = function () {};
-jsonbroker.onFault = function () {if( console && console.error ) { console.error(arguments) } };
-jsonbroker.onResponse = function () {};
+jsonbroker.client.onFault = function () {if( console && console.error ) { console.error(arguments) } };
+jsonbroker.client.onResponse = function () {};
 
-jsonbroker.proxies = {};
+jsonbroker.client.proxies = {};
 
-jsonbroker.registerProxy = function(proxyName,proxy) {
+jsonbroker.client.registerProxy = function(proxyName,proxy) {
 
-    jsonbroker.proxies[proxyName] = proxy;
+    jsonbroker.client.proxies[proxyName] = proxy;
 };
 
 
-jsonbroker.forwardFault = function() {
+jsonbroker.client.forwardFault = function() {
 
-    var proxy = jsonbroker.proxies[arguments[2]];
+    var proxy = jsonbroker.client.proxies[arguments[2]];
 
     if( proxy ) {
 
@@ -74,9 +69,9 @@ jsonbroker.forwardFault = function() {
 
 };
 
-jsonbroker.forwardResponse = function() {
+jsonbroker.client.forwardResponse = function() {
 
-    var proxy = jsonbroker.proxies[arguments[2]];
+    var proxy = jsonbroker.client.proxies[arguments[2]];
     if( proxy  ) {
 
         arguments[2] = proxy;
@@ -106,4 +101,4 @@ jsonbroker.forwardResponse = function() {
 
 
 
-// ^^^ D4FA3825-997D-4E5F-B1E9-28A680A81362 file_preprocessor.application.j2se.jsmin.JavascriptMinify
+// ^^^ 3973ED56-6593-4A92-8578-ECBF849EA0C9 file_preprocessor.application.j2se.jsmin.JavascriptMinify

@@ -2,23 +2,22 @@
 //
 //  Released under the MIT license ( http://opensource.org/licenses/MIT )
 //
-// vvv 93D6E876-85EA-4E07-BDA0-63972D0DA5CC file_preprocessor.application.j2se.jsmin.JavascriptMinify
+// vvv 9A0B9AF7-4515-4390-922E-D138C1090039 file_preprocessor.application.j2se.jsmin.JavascriptMinify
 
 
 
 
 var jsonbroker = jsonbroker || {};
+jsonbroker.client = jsonbroker.client || {};
 
 
-if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.client.BrowserBridge.js'" )}
 
-
-jsonbroker.BrowserBridge = function() {
+jsonbroker.client.BrowserBridge = function() {
     this._url = "/_dynamic_/open/services";
 }
 
 
-jsonbroker.BrowserBridge.prototype.dispatch = function() {
+jsonbroker.client.BrowserBridge.prototype.dispatch = function() {
 
 //    var metaInformation = arguments[1];
 //    metaInformation["ChromeCallbackAdapter.href"] = window.location.href;
@@ -46,10 +45,10 @@ jsonbroker.BrowserBridge.prototype.dispatch = function() {
 
             if( "response" === brokerMessage[0]) {
 
-                jsonbroker.forwardResponse.apply(jsonbroker, brokerMessage );
+                jsonbroker.client.forwardResponse.apply(jsonbroker, brokerMessage );
                 return;
             } else if( "fault" === brokerMessage[0]) {
-                jsonbroker.forwardFault.apply( jsonbroker, brokerMessage );
+                jsonbroker.client.forwardFault.apply( jsonbroker, brokerMessage );
                 return;
             }
             // else drop through ...
@@ -73,7 +72,7 @@ jsonbroker.BrowserBridge.prototype.dispatch = function() {
         associativeParamaters["stackTrace"] = [];
         associativeParamaters["underlyingFaultMessage"] =  null;
 
-        jsonbroker.forwardFault.apply( jsonbroker, args );
+        jsonbroker.client.forwardFault.apply( jsonbroker, args );
 
 
     };
@@ -85,4 +84,4 @@ jsonbroker.BrowserBridge.prototype.dispatch = function() {
 
 }
 
-// ^^^ 93D6E876-85EA-4E07-BDA0-63972D0DA5CC file_preprocessor.application.j2se.jsmin.JavascriptMinify
+// ^^^ 9A0B9AF7-4515-4390-922E-D138C1090039 file_preprocessor.application.j2se.jsmin.JavascriptMinify

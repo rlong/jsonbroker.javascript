@@ -21,7 +21,7 @@
 
 
 
-<button id="window-ping" style="width:50%; height:40px">Window.Ping</button>
+<button id="jsonbroker-ping" style="width:50%; height:40px">jsonbroker.Ping</button>
 
 
 <button id="proxy-ping" style="width:50%; height:40px">Proxy.Ping</button>
@@ -33,7 +33,7 @@
 <button id="ping_oneway" style="width:50%; height:40px">Ping Oneway</button>
 
 <hr>
-<button id="window-error" style="width:50%; height:40px">Window.Error</button>
+<button id="jsonbroker-error" style="width:50%; height:40px">jsonbroker.Error</button>
 
 <button id="proxy-error" style="width:50%; height:40px">Proxy.Error</button>
 
@@ -68,7 +68,7 @@
         jsonbroker.onResponse = function( messageType, metaData, proxy, method, majorVersion, minorVersion, associativeParamaters) {
 
             var debug_textarea = document.getElementById("debug_textarea");
-            debug_textarea.value += "jsonbroker.onResponse() called;\n";
+            debug_textarea.value += "jsonbroker.onResponse() called\n";
 
             console.debug( "jsonbroker.onResponse", arguments);
         }
@@ -77,7 +77,7 @@
         jsonbroker.onFault = function(messageType, metaData, proxy, method, majorVersion, minorVersion, fault) {
 
             var debug_textarea = document.getElementById("debug_textarea");
-            debug_textarea.value += "jsonbroker.onResponse() called;\n";
+            debug_textarea.value += "jsonbroker.onFault() called\n";
 
             console.debug( "jsonbroker.onFault", arguments);
         }
@@ -89,66 +89,86 @@
 <script type="text/javascript">
 
 
-    selector.addEventListener( "#window-ping", "click", function(){
-            _test.ping(); // response passed back to window.onResponse()
-        });
 
-    selector.addEventListener( "#proxy-ping", "click", function(){
-
-        // setup up the response handler ...
-        _test.onResponse = function() {
-            debug_textarea.value += "proxy-ping\n";
-            delete _test.onResponse; // tear down
-        };
-
-        // initiate the call ...
+    {
+        var jsonbrokerPing = document.getElementById( "jsonbroker-ping");
+        jsonbrokerPing.addEventListener( "click", function() {
             _test.ping();
         });
+    }
 
-    selector.addEventListener( "#method-ping", "click", function(){
+    {
+        var proxyPing = document.getElementById( "proxy-ping");
+        proxyPing.addEventListener( "click", function() {
 
-        // setup up the response handler ...
-        _test.ping.onResponse = function() {
-            debug_textarea.value += "method-ping\n";
-            delete _test.ping.onResponse; // tear down
-        };
+            // setup up the response handler ...
+            _test.onResponse = function() {
+                debug_textarea.value += "proxy-ping\n";
+                delete _test.onResponse; // tear down
+            };
 
-        // initiate the call ...
-        _test.ping();
+            // initiate the call ...
+            _test.ping();
+        });
+    }
 
-    });
+    {
+        var methodPing = document.getElementById( "method-ping");
+        methodPing.addEventListener( "click", function() {
 
-    selector.addEventListener( "#ping_oneway", "click", function(){
-        _test.ping_oneway();
-    });
+            // setup up the response handler ...
+            _test.ping.onResponse = function() {
+                debug_textarea.value += "method-ping\n";
+                delete _test.ping.onResponse; // tear down
+            };
 
+            // initiate the call ...
+            _test.ping();
 
-    selector.addEventListener( "#window-error", "click", function(){
-        _test.raise_error();
-    });
+        });
+    }
 
+    {
+        var pingOneway = document.getElementById( "ping_oneway");
+        pingOneway.addEventListener( "click", function() {
+            _test.ping_oneway();
+        });
+    }
 
-    selector.addEventListener( "#proxy-error", "click", function(){
+    {
+        var jsonbrokerError = document.getElementById( "jsonbroker-error");
+        jsonbrokerError.addEventListener( "click", function() {
 
-        _test.onFault = function() {
-            debug_textarea.value += "proxy-error\n";
-            delete _test.onFault; // tear down
-        };
+            _test.raise_error();
+        });
+    }
 
-        _test.raise_error();
+    {
+        var proxyError = document.getElementById( "proxy-error");
+        proxyError.addEventListener( "click", function() {
 
-    });
+            _test.onFault = function() {
+                debug_textarea.value += "proxy-error\n";
+                delete _test.onFault; // tear down
+            };
 
-    selector.addEventListener( "#method-error", "click", function(){
+            _test.raise_error();
+        });
 
-        _test.raise_error.onFault = function() {
-            debug_textarea.value += "method-error\n";
-            delete _test.raise_error.onFault; // tear down
-        };
+    }
 
-        _test.raise_error();
+    {
+        var methodError = document.getElementById( "method-error");
+        methodError.addEventListener( "click", function() {
 
-    });
+            _test.raise_error.onFault = function() {
+                debug_textarea.value += "method-error\n";
+                delete _test.raise_error.onFault; // tear down
+            };
+
+            _test.raise_error();
+        });
+    }
 
 
 </script>
