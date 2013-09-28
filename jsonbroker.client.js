@@ -65,7 +65,7 @@ jsonbroker.client.forwardFault = function() {
         }
     }
 
-    this.onFault.apply(this.onFault,arguments);
+    jsonbroker.client.onFault.apply(jsonbroker.client.onFault,arguments);
 
 };
 
@@ -96,7 +96,7 @@ jsonbroker.client.forwardResponse = function() {
         }
     }
 
-    this.onResponse.apply(this.onResponse,arguments);
+    jsonbroker.client.onResponse.apply(jsonbroker.client.onResponse,arguments);
 };
 
 

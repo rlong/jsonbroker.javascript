@@ -17,7 +17,7 @@ test.TestProxy = function(dispatcher) {
     this._majorVersion = 1;
     this._minorVersion = 0;
 
-    jsonbroker.client.registerProxy(this._serviceName,this);
+    jsonbroker.registerProxy(this._serviceName,this);
 
 }
 

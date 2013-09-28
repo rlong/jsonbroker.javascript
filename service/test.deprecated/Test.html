@@ -51,24 +51,21 @@
     <!-- JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS JS   -->
 
 
-    <script type="text/javascript" src="../../jsonbroker.common.js"></script>
-    <script type="text/javascript" src="../../jsonbroker.client.js"></script>
-
     <script type="text/javascript" src="../../auxilliary/selector.js"></script>
-
-    <script type="text/javascript" src="../../jsonbroker.client.BrowserBridge.js"></script>
-    <script type="text/javascript" src="../../jsonbroker.client.MobileBridge.js"></script>
+    <script type="text/javascript" src="../../jsonbroker.js"></script>
+    <script type="text/javascript" src="../../BrowserBridge.js"></script>
+    <script type="text/javascript" src="../../MobileBridge.js"></script>
 
     <script type="text/javascript" src="TestProxy.js"></script>
 
     <script type="text/javascript">
 
-        var bridge = jsonbroker.client.buildBridge();
+        var bridge = jsonbroker.buildBridge();
         var _test = new test.TestProxy(bridge);
 
         ////////////////////////////////////////////////////////////////////////
 
-        jsonbroker.client.onResponse = function( messageType, metaData, proxy, method, majorVersion, minorVersion, associativeParamaters) {
+        jsonbroker.onResponse = function( messageType, metaData, proxy, method, majorVersion, minorVersion, associativeParamaters) {
 
             var debug_textarea = document.getElementById("debug_textarea");
             debug_textarea.value += "jsonbroker.onResponse() called\n";
@@ -77,7 +74,7 @@
         }
 
 
-        jsonbroker.client.onFault = function(messageType, metaData, proxy, method, majorVersion, minorVersion, fault) {
+        jsonbroker.onFault = function(messageType, metaData, proxy, method, majorVersion, minorVersion, fault) {
 
             var debug_textarea = document.getElementById("debug_textarea");
             debug_textarea.value += "jsonbroker.onFault() called\n";

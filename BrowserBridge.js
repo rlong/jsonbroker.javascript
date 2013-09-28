@@ -46,10 +46,32 @@ jsonbroker.BrowserBridge.prototype.dispatch = function() {
 
             if( "response" === brokerMessage[0]) {
 
-                jsonbroker.forwardResponse.apply(jsonbroker, brokerMessage );
+
+                if( jsonbroker.forwardResponse ) {
+
+                    if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.client.js' instead of 'jsonbroker.js'" )}
+                    jsonbroker.forwardResponse.apply(jsonbroker, brokerMessage );
+
+                } else {
+
+                    jsonbroker.client.forwardResponse.apply(jsonbroker, brokerMessage );
+
+                }
+
                 return;
+
             } else if( "fault" === brokerMessage[0]) {
-                jsonbroker.forwardFault.apply( jsonbroker, brokerMessage );
+
+                if( jsonbroker.forwardFault ) {
+
+                    if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.client.js' instead of 'jsonbroker.js'" )}
+                    jsonbroker.forwardFault.apply( jsonbroker, brokerMessage );
+
+                } else {
+                    jsonbroker.client.forwardFault.apply( jsonbroker, brokerMessage );
+                }
+
+
                 return;
             }
             // else drop through ...
@@ -73,7 +95,15 @@ jsonbroker.BrowserBridge.prototype.dispatch = function() {
         associativeParamaters["stackTrace"] = [];
         associativeParamaters["underlyingFaultMessage"] =  null;
 
-        jsonbroker.forwardFault.apply( jsonbroker, args );
+        if( jsonbroker.forwardFault ) {
+
+            if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.client.js' instead of 'jsonbroker.js'" )}
+            jsonbroker.forwardFault.apply( jsonbroker, args );
+
+        } else {
+            jsonbroker.client.forwardFault.apply( jsonbroker, args );
+        }
+
 
 
     };
