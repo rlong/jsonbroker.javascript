@@ -5,8 +5,12 @@
 // vvv 3973ED56-6593-4A92-8578-ECBF849EA0C9 file_preprocessor.application.j2se.jsmin.JavascriptMinify
 
 
+
+if( console && console.warn ) { console.warn( "deprecated: use 'client/ClientBroker.js'" )}
+
 var jsonbroker = jsonbroker || {};
 jsonbroker.client = jsonbroker.client || {};
+
 
 jsonbroker.client.buildBridge = function() {
 

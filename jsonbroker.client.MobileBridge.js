@@ -8,6 +8,7 @@
 var jsonbroker = jsonbroker || {};
 jsonbroker.client = jsonbroker.client || {};
 
+if( console && console.warn ) { console.warn( "deprecated: use 'client/MobileBridge.js'" )}
 
 jsonbroker.client.MobileBridge = function() {
 }

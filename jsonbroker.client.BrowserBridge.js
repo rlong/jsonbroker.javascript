@@ -7,13 +7,28 @@
 
 
 
+if( console && console.warn ) { console.warn( "deprecated: use 'client/BrowserBridge.js'" )}
+
 var jsonbroker = jsonbroker || {};
 jsonbroker.client = jsonbroker.client || {};
 
+/**
+ *
+ * @param {String} [url]
+ * @constructor
+ */
+jsonbroker.client.BrowserBridge = function( url ) {
 
+    if( url ) {
 
-jsonbroker.client.BrowserBridge = function() {
-    this._url = "/_dynamic_/open/services";
+        this._url = url;
+
+    } else {
+
+        this._url = "/_dynamic_/open/services";
+
+    }
+
 }
 
 

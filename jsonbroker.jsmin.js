@@ -3,7 +3,7 @@
 //  Released under the MIT license ( http://opensource.org/licenses/MIT )
 //
 
-var jsonbroker=jsonbroker||{};if(console&&console.warn){console.warn("deprecated: use 'jsonbroker.common.js' and 'jsonbroker.client.js'")}
+var jsonbroker=jsonbroker||{};if(console&&console.warn){console.warn("deprecated: use 'jsonbroker.client.js' and (possibly) 'jsonbroker.lifecycle.js'")}
 jsonbroker.buildBridge=function(){if(0===location.protocol.indexOf("http")){return new jsonbroker.BrowserBridge();}
 if(jsonbroker.MobileBridge){return new jsonbroker.MobileBridge();}
 if(jsonbroker.DesktopBridge){return new jsonbroker.DesktopBridge();}

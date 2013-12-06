@@ -5,16 +5,13 @@
 // vvv 562EA68A-809E-46EB-A699-2B4530BB3231 file_preprocessor.application.j2se.jsmin.JavascriptMinify
 
 
-if( console && console.warn ) { console.warn( "deprecated: use 'client/DesktopBridge.js'" )}
-
-var jsonbroker = jsonbroker || {};
-jsonbroker.client = jsonbroker.client || {};
+var client = client || {};
 
 
-jsonbroker.client.DesktopBridge = function() {
+client.DesktopBridge = function() {
 }
 
-jsonbroker.client.DesktopBridge.prototype.dispatch = function() {
+client.DesktopBridge.prototype.dispatch = function() {
 
     var args = Array.prototype.slice.call(arguments);
     var json = JSON.stringify(args);

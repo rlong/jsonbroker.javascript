@@ -8,7 +8,7 @@
 var jsonbroker = jsonbroker || {};
 
 
-if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.common.js' and 'jsonbroker.client.js'" )}
+if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.client.js' and (possibly) 'jsonbroker.lifecycle.js'" )}
 
 
 jsonbroker.buildBridge = function() {

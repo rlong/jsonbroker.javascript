@@ -7,7 +7,7 @@
 
 var jsonbroker = jsonbroker || {};
 
-if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.client.DesktopBridge.js'" )}
+if( console && console.warn ) { console.warn( "deprecated: use 'client/DesktopBridge.js'" )}
 
 jsonbroker.DesktopBridge = function() {
 }

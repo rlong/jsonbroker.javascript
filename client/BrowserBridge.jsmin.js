@@ -3,7 +3,6 @@
 //  Released under the MIT license ( http://opensource.org/licenses/MIT )
 //
 
-if(console&&console.warn){console.warn("deprecated: use 'client/BrowserBridge.js'")}
 var jsonbroker=jsonbroker||{};jsonbroker.client=jsonbroker.client||{};jsonbroker.client.BrowserBridge=function(url){if(url){this._url=url;}else{this._url="/_dynamic_/open/services";}}
 jsonbroker.client.BrowserBridge.prototype.dispatch=function(){var args=Array.prototype.slice.call(arguments);var call=JSON.stringify(args);var xmlhttp=new XMLHttpRequest();xmlhttp.onreadystatechange=function(){if(this.readyState!=4){return;}
 if(204==this.status){return;}

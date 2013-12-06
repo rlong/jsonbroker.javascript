@@ -2,23 +2,19 @@
 //
 //  Released under the MIT license ( http://opensource.org/licenses/MIT )
 //
-// vvv 93D6E876-85EA-4E07-BDA0-63972D0DA5CC file_preprocessor.application.j2se.jsmin.JavascriptMinify
+// vvv 9A0B9AF7-4515-4390-922E-D138C1090039 file_preprocessor.application.j2se.jsmin.JavascriptMinify
 
 
 
 
-var jsonbroker = jsonbroker || {};
-
-
-if( console && console.warn ) { console.warn( "deprecated: use 'client/BrowserBridge.js'" )}
-
+var client = client || {};
 
 /**
  *
  * @param {String} [url]
  * @constructor
  */
-jsonbroker.BrowserBridge =  function( url ) {
+client.BrowserBridge = function( url ) {
 
     if( url ) {
 
@@ -32,7 +28,8 @@ jsonbroker.BrowserBridge =  function( url ) {
 
 }
 
-jsonbroker.BrowserBridge.prototype.dispatch = function() {
+
+client.BrowserBridge.prototype.dispatch = function() {
 
 //    var metaInformation = arguments[1];
 //    metaInformation["ChromeCallbackAdapter.href"] = window.location.href;
@@ -60,32 +57,10 @@ jsonbroker.BrowserBridge.prototype.dispatch = function() {
 
             if( "response" === brokerMessage[0]) {
 
-
-                if( jsonbroker.forwardResponse ) {
-
-                    if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.client.js' instead of 'jsonbroker.js'" )}
-                    jsonbroker.forwardResponse.apply(jsonbroker, brokerMessage );
-
-                } else {
-
-                    jsonbroker.client.forwardResponse.apply(jsonbroker, brokerMessage );
-
-                }
-
+                client.ClientBroker.forwardResponse.apply(client.ClientBroker, brokerMessage );
                 return;
-
             } else if( "fault" === brokerMessage[0]) {
-
-                if( jsonbroker.forwardFault ) {
-
-                    if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.client.js' instead of 'jsonbroker.js'" )}
-                    jsonbroker.forwardFault.apply( jsonbroker, brokerMessage );
-
-                } else {
-                    jsonbroker.client.forwardFault.apply( jsonbroker, brokerMessage );
-                }
-
-
+                client.ClientBroker.forwardFault.apply( client.ClientBroker, brokerMessage );
                 return;
             }
             // else drop through ...
@@ -109,15 +84,7 @@ jsonbroker.BrowserBridge.prototype.dispatch = function() {
         associativeParamaters["stackTrace"] = [];
         associativeParamaters["underlyingFaultMessage"] =  null;
 
-        if( jsonbroker.forwardFault ) {
-
-            if( console && console.warn ) { console.warn( "deprecated: use 'jsonbroker.client.js' instead of 'jsonbroker.js'" )}
-            jsonbroker.forwardFault.apply( jsonbroker, args );
-
-        } else {
-            jsonbroker.client.forwardFault.apply( jsonbroker, args );
-        }
-
+        client.ClientBroker.forwardFault.apply( client.ClientBroker, args );
 
 
     };
@@ -129,4 +96,4 @@ jsonbroker.BrowserBridge.prototype.dispatch = function() {
 
 }
 
-// ^^^ 93D6E876-85EA-4E07-BDA0-63972D0DA5CC file_preprocessor.application.j2se.jsmin.JavascriptMinify
+// ^^^ 9A0B9AF7-4515-4390-922E-D138C1090039 file_preprocessor.application.j2se.jsmin.JavascriptMinify
