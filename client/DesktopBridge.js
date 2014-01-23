@@ -13,6 +13,8 @@ client.DesktopBridge = function() {
 
 client.DesktopBridge.prototype.dispatch = function() {
 
+
+
     var args = Array.prototype.slice.call(arguments);
     var json = JSON.stringify(args);
     window.external.dispatch( json );

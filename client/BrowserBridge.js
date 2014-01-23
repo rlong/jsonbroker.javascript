@@ -35,6 +35,9 @@ client.BrowserBridge.prototype.dispatch = function() {
 //    metaInformation["ChromeCallbackAdapter.href"] = window.location.href;
 
     var args = Array.prototype.slice.call(arguments);
+
+
+
     var call = JSON.stringify(args);
     //console.debug( call );
 
