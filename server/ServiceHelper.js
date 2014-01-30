@@ -1,16 +1,18 @@
 
 
 
+var server = server || {};
 
-var ServiceHelper = ServiceHelper || {};
+server.ServiceHelper =  server.ServiceHelper || {};
 
 
 /**
  *
- * @param {Object} a 'BrokerMessage' request
- * @return {Object} a 'BrokerMessage' response
+ * @param {Object} service associated with the request
+ * @param {Object} request, a 'BrokerMessage' object from a client
+ * @return {Object} a 'BrokerMessage' fault object
  */
-ServiceHelper.methodNotFound = function( request ) {
+server.ServiceHelper.methodNotFound = function( service, request ) {
 
     var fault = request.buildFault();
 

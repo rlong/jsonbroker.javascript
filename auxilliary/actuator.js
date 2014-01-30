@@ -1,4 +1,4 @@
-//  Copyright (c) 2013 Richard Long & HexBeerium
+//  Copyright (c) 2014 Richard Long & HexBeerium
 //
 //  Released under the MIT license ( http://opensource.org/licenses/MIT )
 //
@@ -8,26 +8,11 @@
 var actuator = actuator || {};
 
 
-actuator.touchSupported = true
-
-//http://www.2c2d.co.uk/articles/jquery-and-mobile-safari-touch-events
-// http://modernizr.github.com/Modernizr/touch.html
-try {
-    document.createEvent("TouchEvent");
-} catch(e) {
-    actuator.touchSupported = false;
-}
-
-actuator.startEvent = "mousedown";
-actuator.commitEvent = "click";
-
-if( actuator.touchSupported ) {
-    actuator.startEvent = "touchstart";
-    actuator.commitEvent = "touchend";
-}
 
 
-// vvv iOS 4 WebView does not support HTMLElement.classList
+
+
+// vvv Android 2.3.X (GINGERBREAD_MR1) and possibly later versions does not support HTMLElement.classList
 
 actuator.ClassList = function(htmlElement) {
     this._htmlElement = htmlElement;
@@ -61,11 +46,12 @@ actuator.ClassList.prototype.add = function( activeClass ) {
 
 }
 
-// ^^^ iOS 4 WebView does not support HTMLElement.classList
+// ^^^ Android 2.3.X (GINGERBREAD_MR1) and possibly later versions does not support HTMLElement.classList
+
 
 
 actuator.currentTarget = null;
-
+actuator.suppresMouseEvents = false;
 
 actuator.updateCurrentTarget = function(nextTarget, activeClass) {
 
@@ -89,7 +75,8 @@ actuator.updateCurrentTarget = function(nextTarget, activeClass) {
 
 actuator.setupActuator = function( listSpecifier, activeClass, onActuateStart, onActuateCommit ) {
 
-    // vvv iOS 4 WebView does not support HTMLElement.classList
+
+    // vvv Android 2.3.X (GINGERBREAD_MR1) and possibly later versions does not support HTMLElement.classList
 
     // selector.selectAllAndApply = function( listSpecifier, func, root ) {
     listSpecifier = selector.selectAllAndApply( listSpecifier, function(){
@@ -98,70 +85,107 @@ actuator.setupActuator = function( listSpecifier, activeClass, onActuateStart, o
         }
     });
 
-    // ^^^ iOS 4 WebView does not support HTMLElement.classList
-
+    // ^^^ Android 2.3.X (GINGERBREAD_MR1) and possibly later versions does not support HTMLElement.classList
 
 
     ///////////////////////////////////////////////////////////////////////////
     // Starting Actuation
+    {
 
-    //listSpecifier, eventName, func, root
-    listSpecifier = selector.addEventListener( listSpecifier, actuator.startEvent, function(e){
 
-        actuator.updateCurrentTarget( e.currentTarget, activeClass );
+        var actuateStart = function(e) {
 
-        if( onActuateStart ) {
-            onActuateStart.call( this, e);
+            // a touch event ?
+            if(e.touches ) {
+                actuator.suppresMouseEvents = true;
+            } else if( actuator.suppresMouseEvents ) {
+                return;
+            }
+
+            actuator.updateCurrentTarget( e.currentTarget, activeClass );
+
+            if( onActuateStart ) {
+                onActuateStart.call( this, e);
+            }
+
+            // a touch event ?
+            if(e.touches ) {
+
+                // take note of it's `Y` position
+                e.currentTarget.startActuationY = e.touches[0].clientY;
+
+            }
+//            e.preventDefault();
+//            e.stopPropagation();
+
         }
 
-        if( actuator.touchSupported ) {
-            //e.currentTarget.startActuationX = e.touches[0].clientX;
-            e.currentTarget.startActuationY = e.touches[0].clientY;
+        listSpecifier = selector.addEventListener( listSpecifier, "mousedown", actuateStart );
+        listSpecifier = selector.addEventListener( listSpecifier, "touchstart", actuateStart );
 
-            e.stopPropagation();
-        }
-
-    } );
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // Committing Actuation
-    listSpecifier = selector.addEventListener( listSpecifier, actuator.commitEvent, function(e){
+    {
 
-        if( null == actuator.currentTarget ) {
-            return;
-        }
+        var actuateCommit = function( e ) {
 
-        actuator.updateCurrentTarget( null, activeClass );
-
-        if( onActuateCommit ) {
-            onActuateCommit.call( this, e );
-        }
-
-    } );
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Cancelling Actuation
-    if( actuator.touchSupported ) {
-
-        listSpecifier = selector.addEventListener( listSpecifier, "touchmove", function(e){
-
+            // a touch event ?
+            if(e.touches ) {
+                actuator.suppresMouseEvents = true;
+            } else if( actuator.suppresMouseEvents ) {
+                return;
+            }
 
             if( null == actuator.currentTarget ) {
                 return;
             }
 
-//            var horizontalTravel = actuator.currentTarget.startActuationX - e.pageX;
-//
-//            if( -20 > horizontalTravel || 20 < horizontalTravel ) {
-//                actuator.updateCurrentTarget( null, activeClass );
-//                return;
-//            }
+            actuator.updateCurrentTarget( null, activeClass );
 
-//        e.currentTarget.startActuationY = e.touches[0].clientY;
+
+            if( onActuateCommit ) {
+                onActuateCommit.call( this, e );
+            }
+//                e.stopPropagation();
+//            e.preventDefault();
+
+        };
+
+        listSpecifier = selector.addEventListener( listSpecifier, "click", actuateCommit );
+        listSpecifier = selector.addEventListener( listSpecifier, "touchend", actuateCommit );
+
+
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Cancelling Actuation
+    {
+
+        listSpecifier = selector.addEventListener( listSpecifier, "touchmove", function(e){
+
+            // a touch event ?
+            if(e.touches ) {
+                actuator.suppresMouseEvents = true;
+            } else if( actuator.suppresMouseEvents ) {
+                return;
+            }
+
+            if( null == actuator.currentTarget ) {
+                return;
+            }
+
+            // a touch event ?
+            if(e.touches ) {
+                actuator.suppresMouseEvents = true;
+            } else if( actuator.suppresMouseEvents ) {
+                return;
+            }
 
             var verticalTravel = actuator.currentTarget.startActuationY - e.touches[0].clientY;
 
-
+            // too much vertical travel ...
             if( -15 > verticalTravel || 15 < verticalTravel ) {
                 actuator.updateCurrentTarget( null, activeClass );
                 return;
@@ -169,14 +193,12 @@ actuator.setupActuator = function( listSpecifier, activeClass, onActuateStart, o
 
         });
 
-
-    } else { // browser ?
-
         listSpecifier = selector.addEventListener( listSpecifier, "mouseout", function(e){
 
             actuator.updateCurrentTarget( null, activeClass );
 
         });
+
     }
 
 

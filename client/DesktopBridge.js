@@ -22,4 +22,11 @@ client.DesktopBridge.prototype.dispatch = function() {
 }
 
 
+client.DesktopBridge.prototype.registerProxy = function(proxyName,proxy) {
+
+    return client.ClientBroker.registerProxy(proxyName,proxy);
+
+}
+
+
 // ^^^ 562EA68A-809E-46EB-A699-2B4530BB3231 file_preprocessor.application.j2se.jsmin.JavascriptMinify

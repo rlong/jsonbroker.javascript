@@ -3,18 +3,22 @@
 //  Released under the MIT license ( http://opensource.org/licenses/MIT )
 //
 
+// requires:
+// * jsonbroker.javascript/common/BrokerMessage.js
 
-ServicesRegistery = function() {
+var server = server || {};
+
+server.ServicesRegistery = function() {
 
     this._services = {};
 }
 
 /**
  *
- * @param {Object} a 'BrokerMessage' request
+ * @param {Object} an array that represents a 'BrokerMessage' request
  * @return {Object} a 'BrokerMessage' response
  */
-ServicesRegistery.prototype.process = function( request ) {
+server.ServicesRegistery.prototype.process = function( request ) {
 
     var service = this._services[request.serviceName];
 
@@ -25,8 +29,8 @@ ServicesRegistery.prototype.process = function( request ) {
         var ap = fault.associativeParamaters;
         ap["errorDomain"] =  "jsonbroker.ServicesRegistery.SERVICE_NOT_FOUND";
         ap["faultCode"] =  0x4e554c4c; // 'NULL'
-        ap["faultContext"] = {"serviceName":request.serviceName,"methodName":request.methodName};
-        ap["faultMessage"] = "!service; serviceName = '"+serviceName+"'";
+        ap["faultContext"] = {"serviceName":request.serviceName,"methodName":request.methodName,"this._registeryName":this._registeryName};
+        ap["faultMessage"] = "!service; serviceName = '"+request.serviceName+"'";
         ap["originator"] = "ServicesRegistery.js: ServicesRegistery.prototype.process";
         ap["stackTrace"] = [];
         ap["underlyingFaultMessage"] =  null;
@@ -41,8 +45,10 @@ ServicesRegistery.prototype.process = function( request ) {
 }
 
 
-ServicesRegistery.prototype.addService = function( describedService ) {
+server.ServicesRegistery.prototype.addService = function( describedService ) {
 
     this._services[ describedService.getServiceName() ] = describedService;
 
 }
+
+

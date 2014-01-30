@@ -10,9 +10,15 @@ client.ClientBroker = client.ClientBroker || {};
 
 
 
-
-
 client.ClientBroker.buildBridge = function() {
+
+    if( console && console.warn ) { console.warn( "deprecated: use 'client.ClientBroker.buildBroker()'" )}
+
+    return client.ClientBroker.buildBroker();
+
+};
+
+client.ClientBroker.buildBroker = function() {
 
     if( 0 === location.protocol.indexOf("http") ) {
         return new client.BrowserBridge();
@@ -29,6 +35,7 @@ client.ClientBroker.buildBridge = function() {
     throw "Could not Find Appropriate Bridge";
 
 };
+
 
 
 client.ClientBroker.onFault = function () {if( console && console.error ) { console.error(arguments) } };

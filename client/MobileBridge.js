@@ -44,5 +44,11 @@ client.MobileBridge.prototype.dispatch = function() {
 
 }
 
+client.MobileBridge.prototype.registerProxy = function(proxyName,proxy) {
+
+    return client.ClientBroker.registerProxy(proxyName,proxy);
+
+}
+
 
 // ^^^ 2C877730-9F9F-4BAE-8FA6-35978C881DC4 file_preprocessor.application.j2se.jsmin.JavascriptMinify

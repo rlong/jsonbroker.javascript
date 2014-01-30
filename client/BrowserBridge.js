@@ -99,4 +99,14 @@ client.BrowserBridge.prototype.dispatch = function() {
 
 }
 
+
+
+client.BrowserBridge.prototype.registerProxy = function(proxyName,proxy) {
+
+    return client.ClientBroker.registerProxy(proxyName,proxy);
+
+}
+
+
+
 // ^^^ 9A0B9AF7-4515-4390-922E-D138C1090039 file_preprocessor.application.j2se.jsmin.JavascriptMinify
