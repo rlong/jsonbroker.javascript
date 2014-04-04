@@ -8,17 +8,7 @@
 var client = client || {};
 client.ClientBroker = client.ClientBroker || {};
 
-
-
-client.ClientBroker.buildBridge = function() {
-
-    if( console && console.warn ) { console.warn( "deprecated: use 'client.ClientBroker.buildBroker()'" )}
-
-    return client.ClientBroker.buildBroker();
-
-};
-
-client.ClientBroker.buildBroker = function() {
+client.ClientBroker.getBridge = function() {
 
     if( 0 === location.protocol.indexOf("http") ) {
         return new client.BrowserBridge();
@@ -33,6 +23,14 @@ client.ClientBroker.buildBroker = function() {
     }
 
     throw "Could not Find Appropriate Bridge";
+
+}
+
+client.ClientBroker.buildBridge = function() {
+
+    if( console && console.warn ) { console.warn( "deprecated: use 'client.ClientBroker.getBridge()'" )}
+
+    return client.ClientBroker.getBridge();
 
 };
 
@@ -59,7 +57,6 @@ client.ClientBroker.registerProxy = function(proxyName,proxy) {
 
 client.ClientBroker.lookupProxy = function( parameters ) {
 
-    console.log( parameters );
     var metaData = parameters[1];
     var proxyKey = metaData["client.ClientBroker.proxyKey"];
 
